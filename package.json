@@ -1,0 +1,27 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test:e2e": "Cypress=true is-ci-cli test:e2e:run test:e2e:dev",
+    "test:e2e:run": "start-server-and-test start http://localhost:3000 cy:run",
+    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 cy:open",
+    "pretest:e2e:run": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/cypress": "^8.0.1",
+    "@types/testing-library__cypress": "^5.0.9",
+    "@types/faker": "^5.5.8",
+    "cypress": "^8.4.1",
+    "faker": "^5.5.3",
+    "is-ci-cli": "^2.2.0",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "^4.4.3"
+  }
+}
