@@ -44,12 +44,26 @@ Cypress.Commands.add("createUser", (overrides?: Partial<User>) => {
   }).then((response) => ({ ...response.body, ...user }));
 });
 
-// Cypress.Commands.add("loginNewUser", (overrides?: Partial<User>) => {
-//   cy.createUser(overrides).then(async (user) => {
-//     await signIn("credentials", {
-//       redirect: false,
-//       ...user,
-//     });
-//     cy.visit("/");
-//   });
-// });
+Cypress.Commands.add("loginNewUser", (overrides?: Partial<User>) => {
+  cy.createUser(overrides).then((user) => {
+    cy.request({ url: "/api/auth/csrf" }).then((csrfTokenRes) => {
+      cy.request({
+        method: "POST",
+        url: "/api/auth/callback/credentials",
+        body: {
+          redirect: false,
+          email: user.email,
+          password: user.password,
+          csrfToken: csrfTokenRes.body.csrfToken,
+          callbackUrl: "http://localhost:3000/login",
+          json: true,
+        },
+      }).then((res) => {
+        console.log(res);
+        cy.request({ url: "/api/auth/session" }).then(() => {
+          cy.visit("/");
+        });
+      });
+    });
+  });
+});

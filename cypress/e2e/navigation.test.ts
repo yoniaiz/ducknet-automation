@@ -8,7 +8,7 @@ describe("Navigation", () => {
       cy.get("h1").contains(/register/i);
     });
 
-    it.skip("shouldnt be able to got to create project page", () => {
+    it("shouldnt be able to got to create project page", () => {
       cy.visit("/login");
       cy.url().should("include", "/login");
       cy.visit("/create");
@@ -20,6 +20,7 @@ describe("Navigation", () => {
     it("Should be able to go to create project", () => {
       cy.loginNewUser();
 
+      cy.url().should("include", "/projects");
       cy.findByTestId("link--create").click();
       cy.url().should("include", "/create");
     });
