@@ -59,7 +59,6 @@ Cypress.Commands.add("loginNewUser", (overrides?: Partial<User>) => {
           json: true,
         },
       }).then((res) => {
-        console.log(res);
         cy.request({ url: "/api/auth/session" }).then(() => {
           cy.visit("/");
         });
